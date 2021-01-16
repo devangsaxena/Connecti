@@ -44,30 +44,40 @@ module.exports.signIn=function(req,res){
 //get the sign up data
 module.exports.create = function(req,res){
     if(req.body.password != req.body.confirm_password){
+        req.flash('error','Invalid Username/Password');
         return res.redirect('back');
     }
 
     User.findOne({email: req.body.email}, function(err, user){
-        if(err){console.log('error in finding the user in signing up');return}
+        if(err){
+            req.flash('error',err);
+            return
+        }
 
         if(!user){
             User.create(req.body, function(err,user){
-                if(err){console.log('error in finding the user in signing up');return}
-
+                if(err){
+                    req.flash('error',err);
+                    return
+                }
+                
                 return res.redirect('/users/sign-in')
             })
         }else{
+            req.flash('error','User Already Exist! ');
             return res.redirect('back');
         }
     })
 }
 //sign in and craete a session for user
 module.exports.createSession= function(req,res){
+    req.flash('success','Logged In Successfully');
     return res.redirect('/');
 }
 
 
 module.exports.destroySession= function(req,res){
     req.logout();
+    req.flash('success','Logged Out Successfully');
     return res.redirect('/');
 }
