@@ -1,5 +1,5 @@
 const Post=require('../models/post');
-
+const User = require('../models/user');
 module.exports.home= function(req,res){
   
     // populate the user of each post
@@ -12,10 +12,14 @@ module.exports.home= function(req,res){
         }
     })
     .exec(function(err,posts){
-        return res.render('home',{
+        User.find({}, function(err,users){
+            return res.render('home',{
             title:"Connecti | Home",
-            posts : posts
+            posts : posts,
+            all_users : users
+          });
         });
+        
     })
  
 }
