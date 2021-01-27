@@ -19,8 +19,11 @@ module.exports.home=async function(req,res){
          populate:{
          //populating user field of comment schema
             path:'user'
+         },
+         populate:{
+            path:'likes'
          }
-      })
+      }).populate('likes');
       
       let users=await User.find({});
       

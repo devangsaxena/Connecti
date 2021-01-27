@@ -20,6 +20,10 @@
                     newpost function.
                     passing this 'a' tag to deletePost function*/
                     deletePost($(' .delete-post-button', newPost));
+                    // call the create comment class
+                    new PostComments(data.data.post._id);
+                    //enable the functionality of the toggle like button on the new post
+                    new ToggleLike($(' .toggle-like-button',newPost));
                     
                     
                     
@@ -62,6 +66,12 @@
 
                                         <small>
                                         ${ post.user.name }
+                                        </small>
+                                        <br>
+                                        <small>
+                                            <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
+                                                0 Likes
+                                            </a>
                                         </small>
         </p>
             
@@ -107,15 +117,38 @@
                 url: $(deleteLink).prop('href'),
                 success: function(data){
                     $(`#post-${data.data.post_id}`).remove();
+                    new Noty({
+                        theme: 'relax',
+                        text: "Post Deleted",
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 1500
+                        
+                    }).show();
                 }, error: function(error){
                     console.log(err.responseText);
                 }
-            })
-        })
-    }   
+            });
+        });
+    } 
+    
+    // loop over all the existing posts on the page (when the window loads for the first time) and call the delete post method on delete link of each, also add AJAX (using the class we've created) to the delete button of each
+    let convertPostsToAjax = function(){
+        $('#posts-list-container>ul>li').each(function(){
+            let self = $(this);
+            let deleteButton = $(' .delete-post-button', self);
+            deletePost(deleteButton);
+
+            // get the post's id by splitting the id attribute
+            let postId = self.prop('id').split("-")[1]
+            new PostComments(postId);
+        });
+    }
 
 
     
     createPost();
+    
+    convertPostsToAjax();
 
 }
