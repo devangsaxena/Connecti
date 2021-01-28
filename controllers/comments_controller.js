@@ -1,81 +1,92 @@
-const Comment= require('../models/comment');
-const Post = require('../models/post');
-const commentsMailer= require('../mailers/comments_mailer');
-const queue = require('../config/kue');
-const commentEmailWorker= require('../workers/comment_email_worker');
-const Like=require('../models/like');
+const Comment=require('../models/comment');
+const Post=require('../models/post');
+const commentsMailer=require('../mailers/comments_mailer');
+const commentEmailWorker=require('../workers/comment_email_worker');
+const queue=require('../config/kue');
+const Like = require('../models/like');
 
+// To Create the comment by Async Await
+module.exports.create = async function(req, res){
 
-module.exports.create= async function(req,res){
     try{
         let post = await Post.findById(req.body.post);
-        if(post){
+
+        if (post){
             let comment = await Comment.create({
                 content: req.body.content,
                 post: req.body.post,
                 user: req.user._id
             });
+
             post.comments.push(comment);
             post.save();
-            comment= await comment.populate('user','name email').execPopulate();
-            //commentsMailer.newComment(comment);
-            let job= queue.create('emails',comment).save(function(err){
+
+            // send mail to user by nodemail
+            comment = await comment.populate('user','name email').execPopulate();
+            // Setting for kue
+            let job=queue.create('emails',comment).save(function(err){
                 if(err){
-                    console.log('error in creating a queue',err);
+                    console.log('error in creating a queue');
                     return;
                 }
-                console.log('job enqueued',job.id);
+                console.log('job enqueue',job.id);
             });
+
             if(req.xhr){
-                
                 return res.status(200).json({
-                    data:{
+                    data: {
                         comment: comment
                     },
-                    message:"Post Created!"
+                    message: "Post created"
                 });
             }
-            req.flash('success','Comment Published!');
-
+            req.flash('success', 'Comment Published!');
             res.redirect('/');
         }
     }catch(err){
-        req.flash('err',err);
+        console.log('Error', err);
+        req.flash('error',err);
         return;
     }
+    
 }
 
-module.exports.destroy = async function(req,res){
+// To Delete the comments by Async Await
+module.exports.destroy = async function(req, res){
+
     try{
-        let comment= await Comment.findById(req.params.id);
-        if(comment.user==req.user.id){
-            let postId= comment.post;
+        let comment = await Comment.findById(req.params.id);
+
+        if (comment.user == req.user.id){
+            let postId = comment.post;
 
             comment.remove();
-            
 
-            let post= await Post.findByIdAndUpdate(postId,{ $pull: {comments: req.params.id}});
-            //destroy the associated likes for this comment
-            await Like.deleteMany({likeable:comment._id,onModel:'Comment'});
+            let post = Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
+
+            // destroy the associated likes for this comment
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
+
+            // send the comment id which was deleted back to the view
             if(req.xhr){
                 return res.status(200).json({
-                    data:{
+                    data: {
                         comment_id: req.params.id
                     },
-                    message:"Post Deleted"
+                    message: "Post deleted"
                 });
             }
-
-            req.flash('success','Comment Deleted!');
+            req.flash('success','Comment deleted!');
             return res.redirect('back');
         }else{
-            req.flash('error', 'Unauthorized');
+            req.flash('error','Unauthorized')
             return res.redirect('back');
         }
-            
-        
     }catch(err){
-        console.log('Error',err);
+        console.log('Error', err);
+        req.flash('error',err);
         return;
     }
-}
+    
+} 
+

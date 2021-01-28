@@ -1,4 +1,4 @@
-
+// Let's implement this via classes
 
 // this class would be initialized for every post on the page
 // 1. When the page loads
@@ -36,7 +36,7 @@ class PostComments{
                     $(`#post-comments-${postId}`).prepend(newComment);
                     pSelf.deleteComment($(' .delete-comment-button', newComment));
 
-                    // CHANGE :: enable the functionality of the toggle like button on the new comment
+                    //  enable the functionality of the toggle like button on the new comment
                     new ToggleLike($(' .toggle-like-button', newComment));
                     new Noty({
                         theme: 'relax',
@@ -58,13 +58,13 @@ class PostComments{
 
 
     newCommentDom(comment){
-        // CHANGE :: show the count of zero likes on this comment
+        //  show the count of zero likes on this comment
 
         return $(`<li id="comment-${ comment._id }">
                         <p>
                             
                             <small>
-                                <a class="delete-comment-button" href="/comments/destroy/${comment._id}">X</a>
+                                <a class="delete-comment-button" href="/comments/destroy/${comment._id}">Delete</a>
                             </small>
                             
                             ${comment.content}
@@ -111,4 +111,6 @@ class PostComments{
 
         });
     }
-}
+} 
+
+
