@@ -48,13 +48,17 @@ class ChatEngine{
                 messageType = 'self-message';
             }
             
+           
             newMessage.append($('<span>', {
-                'html': data.message
+                'html': data.message,
+                
                 
             }));
             newMessage.append($('<sub>', {
                 'html': data.user_email
+                
             }));
+            
             
             
 

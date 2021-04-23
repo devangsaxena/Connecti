@@ -15,19 +15,21 @@
     background-color: white;
     overflow: auto; }
     #user-chat-box #chat-messages-list .other-message {
-      text-align: right;
+      text-align: left;
       padding: 5px; }
       #user-chat-box #chat-messages-list .other-message span {
         display: inline-block;
         padding: 15px;
-        background-color: #ffa0a0; }
+        background-color: #ffa0a0;
+        border: 2px solid black; }
     #user-chat-box #chat-messages-list .self-message {
       text-align: left;
       padding: 5px; }
       #user-chat-box #chat-messages-list .self-message span {
         display: inline-block;
         padding: 15px;
-        background-color: #a0dcff; }
+        background-color: #a0dcff;
+        border: 2px solid black; }
   #user-chat-box #chat-message-input-container {
     height: 24%;
     width: 100%;
@@ -42,4 +44,4 @@
       font-size: 25px;
       color: white;
       border: none;
-      background: #58d258; }
+      background: #0329a7; }

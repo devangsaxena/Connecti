@@ -63,14 +63,16 @@ class PostComments{
         return $(`<li id="comment-${ comment._id }">
                         <p>
                             
-                            <small>
-                                <a class="delete-comment-button" href="/comments/destroy/${comment._id}">Delete</a>
-                            </small>
+                            
                             
                             ${comment.content}
                             <br>
                             <small>
                                 ${comment.user.name}
+                            </small>
+                            <br>
+                            <small>
+                                <a class="delete-comment-button" href="/comments/destroy/${comment._id}">Delete</a>
                             </small>
                             <small>
                             
