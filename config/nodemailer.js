@@ -9,7 +9,7 @@ let transporter=nodemailer.createTransport({
     source: false,
     auth: {
         user: 'devangsaxena2018@gmail.com',  // this email and password must be correct
-        pass: 'devangsaxenacool'
+        pass: ****************************
     }
 });
 
