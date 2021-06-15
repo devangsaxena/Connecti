@@ -6,7 +6,7 @@
   height: 350px;
   width: 300px;
   background: white;
-  padding: 5px;
+  padding: 1px;
   box-shadow: 1px 1px 1px 1px lightgrey; }
   #user-chat-box #chat-messages-list {
     list-style: none;
@@ -44,4 +44,5 @@
       font-size: 25px;
       color: white;
       border: none;
-      background: #0329a7; }
+      background: #0329a7;
+     }
