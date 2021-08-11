@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const port = 8000;
-//const port=process.env.PORT || 8000 ;
 const db=require('./config/mongoose');
 
 // Used for session cookie
@@ -9,10 +8,10 @@ const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
 
-// Add passport-jwt
+// Added passport-jwt
 const passportJWT=require('./config/passport-jwt-strategy');
 
-// for google oauth
+// Added google oauth
 const passportGoogle=require('./config/passport-google-oauth2-strategy');
 
 const MongoStore=require('connect-mongo')(session);
@@ -28,7 +27,7 @@ chatServer.listen(5000);
 console.log('chat server is listening on the port 5000');
 
 
-// add sass 
+// Added sass middleware
 const sassMiddleware=require('node-sass-middleware');
 app.use(sassMiddleware({
     src: './assets/scss',
@@ -38,32 +37,31 @@ app.use(sassMiddleware({
     prefix: '/css'
 }));
 
-// for encode POST request
+// used for encoding POST request
 app.use(express.urlencoded());
 
-// use cookie as middleware
+// used cookie as middleware
 app.use(cookieParser());
 
-// include layouts library
+// included layouts library
 const expressLayouts=require('express-ejs-layouts');
 app.use(expressLayouts);
 
-// Extract our style and script tag from sub-pages and put it into head of layout page
+// Extracted our style and script tag from sub-pages and put it into head of layout page
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
-// Give access or set path for static files
+// Given access or set path for static files
 app.use(express.static('./assets'));
 // Make the uploads path available to the browser
 app.use('/uploads',express.static(__dirname + '/uploads'));
 
-// Set up view engine
+// Setting up view engine
 app.set('view engine','ejs');
 app.set('views','./views');
 
 app.use(session({
     name: 'connecti',
-    // Todo change the secret before deployment in production mode
     secret: 'blahsomething',
     saveUninitialized: false,
     resave: false,
@@ -88,7 +86,7 @@ app.use(customMware.setFlash);
 
 app.use(passport.setAuthenticatedUser);
 
-// Use express router
+// Used express router
 app.use('/',require('./routes'));
 
 app.listen(port, function (err) {
