@@ -29,7 +29,7 @@
     
     </section>
     
-    <!-- Show profile link on home page -->
+    <!-- profile link on home page -->
     <section id="user-friends" <% if(!locals.user) { %> style="background-image: url(https://coverfiles.alphacoders.com/113/113377.jpg);"<% } %> style="background-color:lightblue;" >
         <% if(locals.user) { %>
         <h4>Friends</h4>
@@ -41,16 +41,16 @@
         <% } %>
     </section>
 
-    <!-- include chat box Partial -->
+    <!-- including chat box Partial -->
     <%- include('_chat_box') -%>
         
 </div>
 
-<!-- importing this script for creating the comments -->
+<!-- importing  script for creating the comments -->
 <script src="/js/home_post_comments.js" ></script>
 <script src="/js/home_posts.js"></script>
 
-<!--  import the script file for toggle likes, also run it over for the already present posts and comments on the page -->
+<!--  import  script file for toggle likes, also run it over for the already present posts and comments on the page -->
 <script src="js/toggle_likes.js"></script>
 <script>
     $('.toggle-like-button').each(function(){
@@ -60,7 +60,7 @@
 </script>
 
 
-<!-- link for from cdn-> https://cdnjs.com/libraries/socket.io -->
+<!-- link for socket from cdn-> https://cdnjs.com/libraries/socket.io -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 <script src="/js/chat_engine.js"></script>
 
