@@ -3,11 +3,11 @@
         <title>
         <%= title  %>
         </title>
-        <!-- min.ss and min.js links are from cdn noty js and the link is:-> https://cdnjs.com/libraries/noty  -->
+        <!--  links from cdn noty js for flash messages -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 
-        <!-- add jquery cdn link (must be added below noty) https://cdnjs.com/libraries/jquery -->
+        <!-- add jquery cdn link  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <link rel="stylesheet" href="/css/layout.css">
@@ -31,9 +31,9 @@
 
         <%- script %>
 
-        <!-- Show flash message by noty js follow link:-> https://ned.im/noty/#/options -->
+        <!--  flash message by noty js -->
         <script>
-                // for Success message
+                <!-- flash message by noty js for Success message -->
                 <% if(flash.success && flash.success.length>0) { %>
                         new Noty({
                                 theme: 'relax',
@@ -44,7 +44,7 @@
                         }).show();
                 <% } %>
 
-                // for error message
+                <!-- flash message by noty js for error message -->
                 <% if(flash.error && flash.error.length>0) { %>
                         new Noty({
                                 theme: 'relax',
