@@ -1,7 +1,7 @@
 const Post=require('../models/post');
 const User=require('../models/user');
 
-// Convert code into async await
+//  code into async await
 module.exports.home= async function(req,res){
     try {
          // Populate the user of each post
